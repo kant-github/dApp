@@ -4,10 +4,10 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export default function SendSol() {
-    const [active, setActive] = useState(false);
-    const [toId, setToId] = useState("");
-    const [amount, setAmount] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [active, setActive] = useState<boolean>(false);
+    const [toId, setToId] = useState<string>("");
+    const [amount, setAmount] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     const wallet = useWallet();
     const { connection } = useConnection();
@@ -19,7 +19,7 @@ export default function SendSol() {
         }
 
         try {
-            new PublicKey(toId); // will throw if invalid
+            new PublicKey(toId);
         } catch {
             toast.error("Invalid public key");
             return;
@@ -49,7 +49,6 @@ export default function SendSol() {
             await wallet.sendTransaction(transaction, connection);
             toast.success(`Successfully sent ${amount} SOL`);
 
-            // Reset form
             setToId("");
             setAmount("");
             setActive(false);
@@ -100,9 +99,8 @@ export default function SendSol() {
                         </button>
 
                         <button
-                            className={`flex-1 px-4 py-2 rounded-md bg-yellow-600 text-white hover:bg-yellow-700 transition ${
-                                loading ? "opacity-50 cursor-not-allowed" : ""
-                            }`}
+                            className={`flex-1 px-4 py-2 rounded-md bg-yellow-600 text-white hover:bg-yellow-700 transition ${loading ? "opacity-50 cursor-not-allowed" : ""
+                                }`}
                             onClick={handleSendSol}
                             type="button"
                             disabled={loading}
